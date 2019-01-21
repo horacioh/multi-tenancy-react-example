@@ -1,44 +1,55 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# React Multi tenant Architecture example
 
-## Available Scripts
+- based on [create-react-app]() & [rescripts]() with Typescript
+- used environment variables to include only files needed
+- uses new React Features (Suspense and Lazy)
 
-In the project directory, you can run:
+## Important pieces:
 
-### `npm start`
+### `.env`
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+it has the both required environment variables: `NODE_PATH` and `REACT_APP_TL_TENANT`.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+- `NODE_PATH`: let us avoid the relative path hell (../../../). [video reference]()
+- `REACT_APP_TL_TENANT`: adds the specific tenant extension file to be imported (see the [`.rescriptsrc.js`]() file for more explanation)
 
-### `npm test`
+### `.rescriptsrc.js`
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Adds the extra extension files to the webpack config on `resolve.extensions`. This is important to maintain the imports inside the code as clean as possible and avoid referring specific tenants or use the `process.env` variable. **All the magic happens at build time**
 
-### `npm run build`
+### `.tsconfig.base.json`
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+In conjunction with the `NODE_PATH`, it let us work with paths from `src` directory (avoid relative path hell as mentioned before)
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Examples
 
-### `npm run eject`
+checkout how setting `cml` as `REACT_APP_TL_TENANT`, we import:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- src/App/Config/theme/theme.cml.ts
+- src/Login/Page.cml.tsx
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+sample code on how we import the `Page` component:
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```jsx
+import React, { Suspense, lazy } from "react";
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+const Login = lazy(() => import(`./Page`));
 
-## Learn More
+/*
+  you see that in the dynamic import above,
+  we are not adding the extra `cml` to the import,
+  but Webpack is doing that for us...
+*/
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+export const LoginPage = () => (
+  <Suspense fallback={<p>loading...</p>}>
+    <Login />
+  </Suspense>
+);
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+
+---
+
+any further questions please let me know!
