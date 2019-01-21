@@ -1,5 +1,6 @@
 import React from "react";
+import { Button as BaseButton } from 'rebass'
 
-export function Button() {
-  return <button>button</button>;
+export function Button(props: any) {
+  return <BaseButton {...props}/>;
 }

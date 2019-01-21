@@ -3,21 +3,24 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@rescripts/cli": "^0.0.9",
     "@types/jest": "23.3.12",
     "@types/node": "10.12.18",
     "@types/react": "16.7.20",
     "@types/react-dom": "16.0.11",
+    "@types/styled-system": "^3.1.1",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-scripts": "2.1.3",
     "rebass": "^3.0.0",
     "styled-components": "^4.1.3",
+    "styled-system": "^3.2.1",
     "typescript": "3.2.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "rescripts start",
+    "build": "rescripts build",
+    "test": "rescripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -30,6 +33,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@rescripts/rescript-use-rewire": "^0.0.4",
     "@types/rebass": "^0.3.3",
     "@types/styled-components": "^4.1.6"
   }
