@@ -17,7 +17,7 @@ it has the both required environment variables: `NODE_PATH` and `REACT_APP_TL_TE
 
 Adds the extra extension files to the webpack config on [`resolve.extensions`](https://webpack.js.org/configuration/resolve/#resolve-extensions). This is important to maintain the imports inside the code as clean as possible and avoid referring specific tenants or use the `process.env` variable. **All the magic happens at build time**
 
-### `.tsconfig.base.json`
+### `tsconfig.base.json`
 
 In conjunction with the `NODE_PATH`, it let us work with paths from `src` directory (avoid relative path hell as mentioned before)
 
