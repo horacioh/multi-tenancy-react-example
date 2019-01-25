@@ -1,6 +1,5 @@
 
 import defaultTheme from './theme.default'
-console.log('theme.cml.ts')
 
 export default {
   ...defaultTheme,
